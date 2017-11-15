@@ -1,4 +1,106 @@
 Citizen.CreateThread(function()
+	local deathTypes = {
+		[GetHashKey("VEHICLE_WEAPON_NOSE_TURRET_VALKYRIE")] = "DM_TK_PISTOL1",
+		[GetHashKey("VEHICLE_WEAPON_PLANE_ROCKET")] = "0xE5DE491C",
+		[GetHashKey("VEHICLE_WEAPON_PLAYER_BULLET")] = "DM_TK_PISTOL1",
+		[GetHashKey("VEHICLE_WEAPON_PLAYER_HUNTER")] = "DM_TK_PISTOL1",
+		[GetHashKey("VEHICLE_WEAPON_PLAYER_LASER")] = "0x7ABAA601",
+		[GetHashKey("VEHICLE_WEAPON_PLAYER_LAZER")] = "0x7ABAA601",
+		[GetHashKey("VEHICLE_WEAPON_PLAYER_SAVAGE")] = "0xB6862F2A",
+		[GetHashKey("VEHICLE_WEAPON_RUINER_BULLET")] = "DM_TK_PISTOL1",
+		[GetHashKey("VEHICLE_WEAPON_SPACE_ROCKET")] = "0xE5DE491C",
+		[GetHashKey("VEHICLE_WEAPON_TANK")] = "0xE5DE491C",
+		[GetHashKey("VEHICLE_WEAPON_TURRET_BOXVILLE")] = "DM_TICK1",
+		[GetHashKey("VEHICLE_WEAPON_TURRET_INSURGENT")] = "DM_TK_PISTOL1",
+		[GetHashKey("VEHICLE_WEAPON_TURRET_LIMO")] = "DM_TK_PISTOL1",
+		[GetHashKey("VEHICLE_WEAPON_TURRET_TECHNICAL")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_ADVANCEDRIFLE")] = "0x23FF2541",
+		[GetHashKey("WEAPON_AIR_DEFENCE_GUN")] = "0xE5DE491C",
+		[GetHashKey("WEAPON_AIRSTRIKE_ROCKET")] = "0xE5DE491C",
+		[GetHashKey("WEAPON_ANIMAL")] = "0xB6862F2A",
+		[GetHashKey("WEAPON_APPISTOL")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_ASSAULTRIFLE")] = "0x23FF2541",
+		[GetHashKey("WEAPON_ASSAULTSHOTGUN")] = "0xE51459D1",
+		[GetHashKey("WEAPON_ASSAULTSMG")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_AUTOSHOTGUN")] = "0xE51459D1",
+		[GetHashKey("WEAPON_BARBED_WIRE")] = "0xB6862F2A",
+		[GetHashKey("WEAPON_BAT")] = "DM_TK_MELEE1",
+		[GetHashKey("WEAPON_BATTLEAXE")] = "0xB6862F2A",
+		[GetHashKey("WEAPON_BOTTLE")] = "0xB6862F2A",
+		[GetHashKey("WEAPON_BULLPUPRIFLE")] = "0x23FF2541",
+		[GetHashKey("WEAPON_BULLPUPSHOTGUN")] = "0xE51459D1",
+		[GetHashKey("WEAPON_BZGAS")] = "0x7ABAA601",
+		[GetHashKey("WEAPON_CARBINERIFLE")] = "0x23FF2541",
+		[GetHashKey("WEAPON_COMBATMG")] = "0x7ABAA601",
+		[GetHashKey("WEAPON_COMBATPDW")] = "0x7ABAA601",
+		[GetHashKey("WEAPON_COMBATPISTOL")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_COMPACTLAUNCHER")] = "0xE5DE491C",
+		[GetHashKey("WEAPON_COMPACTRIFLE")] = "0x23FF2541",
+		[GetHashKey("WEAPON_COUGAR")] = "0xB6862F2A",
+		[GetHashKey("WEAPON_CROWBAR")] = "0xB6862F2A",
+		[GetHashKey("WEAPON_DAGGER")] = "0xB6862F2A",
+		[GetHashKey("WEAPON_DBSHOTGUN")] = "0xE51459D1",
+		[GetHashKey("WEAPON_DROWNING")] = "drowned",
+		[GetHashKey("WEAPON_DROWNING_IN_VEHICLE")] = "drowned",
+		[GetHashKey("WEAPON_EXPLOSION")] = "0xE5DE491C",
+		[GetHashKey("WEAPON_FALL")] = "DM_TICK1",
+		[GetHashKey("WEAPON_FIRE")] = "0xF0521A69",
+		[GetHashKey("WEAPON_FIREWORK")] = "0xE5DE491C",
+		[GetHashKey("WEAPON_FLARE")] = "0xF0521A69",
+		[GetHashKey("WEAPON_FLAREGUN")] = "0xF0521A69",
+		[GetHashKey("WEAPON_GOLFCLUB")] = "DM_TK_MELEE1",
+		[GetHashKey("WEAPON_GRENADE")] = "0xE5DE491C",
+		[GetHashKey("WEAPON_GRENADELAUNCHER")] = "0xE5DE491C",
+		[GetHashKey("WEAPON_GRENADELAUNCHER_SMOKE")] = "0xE5DE491C",
+		[GetHashKey("WEAPON_HAMMER")] = "DM_TK_MELEE1",
+		[GetHashKey("WEAPON_HATCHET")] = "0xB6862F2A",
+		[GetHashKey("WEAPON_HEAVYPISTOL")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_HEAVYSHOTGUN")] = "0xE51459D1",
+		[GetHashKey("WEAPON_HEAVYSNIPER")] = "0x28BBBF8E",
+		[GetHashKey("WEAPON_HELI_CRASH")] = "DM_TK_VK1",
+		[GetHashKey("WEAPON_HIT_BY_WATER_CANNON")] = "DM_TICK1",
+		[GetHashKey("WEAPON_HOMINGLAUNCHER")] = "0xE5DE491C",
+		[GetHashKey("WEAPON_KNIFE")] = "0xB6862F2A",
+		[GetHashKey("WEAPON_KNUCKLE")] = "DM_TK_MELEE1",
+		[GetHashKey("WEAPON_MACHETE")] = "0xB6862F2A",
+		[GetHashKey("WEAPON_MACHINEPISTOL")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_MARKSMANPISTOL")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_MARKSMANRIFLE")] = "0x23FF2541",
+		[GetHashKey("WEAPON_MG")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_MICROSMG")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_MINIGUN")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_MINISMG")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_MOLOTOV")] = "0xF0521A69",
+		[GetHashKey("WEAPON_MUSKET")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_NIGHTSTICK")] = "DM_TK_MELEE1",
+		[GetHashKey("WEAPON_PASSENGER_ROCKET")] = "0xE5DE491C",
+		[GetHashKey("WEAPON_PETROLCAN")] = "0xE5DE491C",
+		[GetHashKey("WEAPON_PIPEBOMB")] = "0xE5DE491C",
+		[GetHashKey("WEAPON_PISTOL")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_PISTOL50")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_POOLCUE")] = "DM_TK_MELEE1",
+		[GetHashKey("WEAPON_PROXMINE")] = "0xE5DE491C",
+		[GetHashKey("WEAPON_PUMPSHOTGUN")] = "0xE51459D1",
+		[GetHashKey("WEAPON_RAILGUN")] = "0xE5DE491C",
+		[GetHashKey("WEAPON_RAMMED_BY_CAR")] = "DM_TK_VK1",
+		[GetHashKey("WEAPON_REMOTESNIPER")] = "0x28BBBF8E",
+		[GetHashKey("WEAPON_REVOLVER")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_RPG")] = "0xE5DE491C",
+		[GetHashKey("WEAPON_RUN_OVER_BY_CAR")] = "DM_TK_VK1",
+		[GetHashKey("WEAPON_SAWNOFFSHOTGUN")] = "0xE51459D1",
+		[GetHashKey("WEAPON_SMG")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_SMOKEGRENADE")] = "0x7ABAA601",
+		[GetHashKey("WEAPON_SNIPERRIFLE")] = "0x28BBBF8E",
+		[GetHashKey("WEAPON_SNSPISTOL")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_SPECIALCARBINE")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_STICKYBOMB")] = "0xE5DE491C",
+		[GetHashKey("WEAPON_STINGER")] = "0xB6862F2A",
+		[GetHashKey("WEAPON_STUNGUN")] = "DM_TK_MELEE1",
+		[GetHashKey("WEAPON_SWITCHBLADE")] = "0xB6862F2A",
+		[GetHashKey("WEAPON_VEHICLE_ROCKET")] = "0xE5DE491C",
+		[GetHashKey("WEAPON_VINTAGEPISTOL")] = "DM_TK_PISTOL1",
+		[GetHashKey("WEAPON_WRENCH")] = "DM_TK_MELEE1"
+	}
 
 	while true do
 		local playerId = PlayerId()
@@ -8,19 +110,23 @@ Citizen.CreateThread(function()
 		local killerPed = nil
 		local killerName = nil
 		local killerEntity = nil
+		local causeHash = nil
 		local weaponHash = nil
+		local deathReason = nil
 
 		SetAudioFlag("LoadMPData", true)
 		local scaleformMovie = RequestScaleformMovie("MP_BIG_MESSAGE_FREEMODE")
 
-		if IsEntityDead(playerPed) and not alreadyDead then
+		if IsEntityDead(playerPed) then
 
 			killerEntity, weaponHash = NetworkGetEntityKillerOfPlayer(playerId)
+			causeHash = GetPedCauseOfDeath(playerPed)
 			killerPed = GetPedKiller(playerPed)
 			killerId = NetworkGetPlayerIndexFromPed(killerEntity)
 			if IsEntityAVehicle(killerEntity) then
 				if not IsVehicleSeatFree(killerEntity, -1) then
 					killerId = NetworkGetPlayerIndexFromPed(GetPedInVehicleSeat(killerEntity, -1))
+					killerEntity = GetPlayerPed(killerId)
 				end
 			end
 			killerName = GetPlayerName(killerId)
@@ -33,13 +139,15 @@ Citizen.CreateThread(function()
 				TriggerServerEvent('huyax:deathscreen:playerDied', 2, 0)
 			end
 
-			PlaySoundFrontend(-1, "ScreenFlash", "MissionFailedSounds", true)
-			PlaySoundFrontend(-1, "Bed", "WastedSounds", true)
+			PlaySoundFrontend(-1, "MP_Flash", "WastedSounds", true)
 			StartScreenEffect("DeathFailMPDark", 0, 0)
 			ShakeGameplayCam("DEATH_FAIL_IN_EFFECT_SHAKE", 1.0)
 
 			while not HasScaleformMovieLoaded(scaleformMovie) do
 				Citizen.Wait(0)
+			end
+			if killerId and killerId ~= playerId and killerName ~= "**Invalid**" then
+				CreateCinematicShot(-1096069633, 2000, 0, killerPed)
 			end
 			PushScaleformMovieFunction(scaleformMovie, "SHOW_SHARD_WASTED_MP_MESSAGE")
 			BeginTextCommandScaleformString("STRING")
@@ -51,7 +159,19 @@ Citizen.CreateThread(function()
 			if killerId == playerId then
 				AddTextComponentSubstringTextLabel("DM_U_SUIC")
 			elseif killerId ~= playerId and killerName ~= "**Invalid**" then
-				AddTextComponentSubstringPlayerName(string.format(GetLabelText("DM_TICK1"):gsub("~a~~HUD_COLOUR_WHITE~", "<C>" .. killerName .. "</C>")))
+
+				if deathTypes[causeHash] == nil or deathTypes[causeHash] == "NULL" then
+					if deathTypes[weaponHash] == nil or deathTypes[weaponHash] == "NULL" then
+						deathReason = GetLabelText("DM_TICK1"):gsub("~a~~HUD_COLOUR_WHITE~", "<C>" .. killerName .. "</C>")
+					else
+						deathReason = GetLabelText(deathTypes[weaponHash]):gsub("~a~~HUD_COLOUR_WHITE~", "<C>" .. killerName .. "</C>")
+					end
+				else
+					deathReason = GetLabelText(deathTypes[causeHash]):gsub("~a~~HUD_COLOUR_WHITE~", "<C>" .. killerName .. "</C>")
+				end
+					
+				AddTextComponentSubstringPlayerName(deathReason)
+
 			else
 				AddTextComponentSubstringTextLabel("DM_TK_YD1")
 			end
@@ -61,24 +181,22 @@ Citizen.CreateThread(function()
 			
 			Citizen.Wait(1000)
 
-			PlaySoundFrontend(-1, "TextHit", "WastedSounds", true)
+			PlaySound(-1, "MP_Impact", "WastedSounds", 0, 0, 0)
 
 			while IsEntityDead(PlayerPedId()) do
 				DrawScaleformMovieFullscreen(scaleformMovie, 255, 255, 255, 255)
 				Citizen.Wait(0)
 			end
 
+			if IsCinematicShotActive(-1096069633) then
+				StopCinematicShot(-1096069633)
+			end
 			StopScreenEffect("DeathFailMPDark")
 			StopGameplayCamShaking()
 
-			alreadyDead = true
-
 		end
 
-		if not IsEntityDead(playerPed) then
-			alreadyDead = false
-		end
-		Citizen.Wait(1)
+		Citizen.Wait(0)
 	end
 end)
 
