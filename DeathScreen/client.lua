@@ -1,107 +1,108 @@
-Citizen.CreateThread(function()
-	local deathTypes = {
-		[GetHashKey("VEHICLE_WEAPON_NOSE_TURRET_VALKYRIE")] = "DM_TK_PISTOL1",
-		[GetHashKey("VEHICLE_WEAPON_PLANE_ROCKET")] = "0xE5DE491C",
-		[GetHashKey("VEHICLE_WEAPON_PLAYER_BULLET")] = "DM_TK_PISTOL1",
-		[GetHashKey("VEHICLE_WEAPON_PLAYER_HUNTER")] = "DM_TK_PISTOL1",
-		[GetHashKey("VEHICLE_WEAPON_PLAYER_LASER")] = "0x7ABAA601",
-		[GetHashKey("VEHICLE_WEAPON_PLAYER_LAZER")] = "0x7ABAA601",
-		[GetHashKey("VEHICLE_WEAPON_PLAYER_SAVAGE")] = "0xB6862F2A",
-		[GetHashKey("VEHICLE_WEAPON_RUINER_BULLET")] = "DM_TK_PISTOL1",
-		[GetHashKey("VEHICLE_WEAPON_SPACE_ROCKET")] = "0xE5DE491C",
-		[GetHashKey("VEHICLE_WEAPON_TANK")] = "0xE5DE491C",
-		[GetHashKey("VEHICLE_WEAPON_TURRET_BOXVILLE")] = "DM_TICK1",
-		[GetHashKey("VEHICLE_WEAPON_TURRET_INSURGENT")] = "DM_TK_PISTOL1",
-		[GetHashKey("VEHICLE_WEAPON_TURRET_LIMO")] = "DM_TK_PISTOL1",
-		[GetHashKey("VEHICLE_WEAPON_TURRET_TECHNICAL")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_ADVANCEDRIFLE")] = "0x23FF2541",
-		[GetHashKey("WEAPON_AIR_DEFENCE_GUN")] = "0xE5DE491C",
-		[GetHashKey("WEAPON_AIRSTRIKE_ROCKET")] = "0xE5DE491C",
-		[GetHashKey("WEAPON_ANIMAL")] = "0xB6862F2A",
-		[GetHashKey("WEAPON_APPISTOL")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_ASSAULTRIFLE")] = "0x23FF2541",
-		[GetHashKey("WEAPON_ASSAULTSHOTGUN")] = "0xE51459D1",
-		[GetHashKey("WEAPON_ASSAULTSMG")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_AUTOSHOTGUN")] = "0xE51459D1",
-		[GetHashKey("WEAPON_BARBED_WIRE")] = "0xB6862F2A",
-		[GetHashKey("WEAPON_BAT")] = "DM_TK_MELEE1",
-		[GetHashKey("WEAPON_BATTLEAXE")] = "0xB6862F2A",
-		[GetHashKey("WEAPON_BOTTLE")] = "0xB6862F2A",
-		[GetHashKey("WEAPON_BULLPUPRIFLE")] = "0x23FF2541",
-		[GetHashKey("WEAPON_BULLPUPSHOTGUN")] = "0xE51459D1",
-		[GetHashKey("WEAPON_BZGAS")] = "0x7ABAA601",
-		[GetHashKey("WEAPON_CARBINERIFLE")] = "0x23FF2541",
-		[GetHashKey("WEAPON_COMBATMG")] = "0x7ABAA601",
-		[GetHashKey("WEAPON_COMBATPDW")] = "0x7ABAA601",
-		[GetHashKey("WEAPON_COMBATPISTOL")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_COMPACTLAUNCHER")] = "0xE5DE491C",
-		[GetHashKey("WEAPON_COMPACTRIFLE")] = "0x23FF2541",
-		[GetHashKey("WEAPON_COUGAR")] = "0xB6862F2A",
-		[GetHashKey("WEAPON_CROWBAR")] = "0xB6862F2A",
-		[GetHashKey("WEAPON_DAGGER")] = "0xB6862F2A",
-		[GetHashKey("WEAPON_DBSHOTGUN")] = "0xE51459D1",
-		[GetHashKey("WEAPON_DROWNING")] = "drowned",
-		[GetHashKey("WEAPON_DROWNING_IN_VEHICLE")] = "drowned",
-		[GetHashKey("WEAPON_EXPLOSION")] = "0xE5DE491C",
-		[GetHashKey("WEAPON_FALL")] = "DM_TICK1",
-		[GetHashKey("WEAPON_FIRE")] = "0xF0521A69",
-		[GetHashKey("WEAPON_FIREWORK")] = "0xE5DE491C",
-		[GetHashKey("WEAPON_FLARE")] = "0xF0521A69",
-		[GetHashKey("WEAPON_FLAREGUN")] = "0xF0521A69",
-		[GetHashKey("WEAPON_GOLFCLUB")] = "DM_TK_MELEE1",
-		[GetHashKey("WEAPON_GRENADE")] = "0xE5DE491C",
-		[GetHashKey("WEAPON_GRENADELAUNCHER")] = "0xE5DE491C",
-		[GetHashKey("WEAPON_GRENADELAUNCHER_SMOKE")] = "0xE5DE491C",
-		[GetHashKey("WEAPON_HAMMER")] = "DM_TK_MELEE1",
-		[GetHashKey("WEAPON_HATCHET")] = "0xB6862F2A",
-		[GetHashKey("WEAPON_HEAVYPISTOL")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_HEAVYSHOTGUN")] = "0xE51459D1",
-		[GetHashKey("WEAPON_HEAVYSNIPER")] = "0x28BBBF8E",
-		[GetHashKey("WEAPON_HELI_CRASH")] = "DM_TK_VK1",
-		[GetHashKey("WEAPON_HIT_BY_WATER_CANNON")] = "DM_TICK1",
-		[GetHashKey("WEAPON_HOMINGLAUNCHER")] = "0xE5DE491C",
-		[GetHashKey("WEAPON_KNIFE")] = "0xB6862F2A",
-		[GetHashKey("WEAPON_KNUCKLE")] = "DM_TK_MELEE1",
-		[GetHashKey("WEAPON_MACHETE")] = "0xB6862F2A",
-		[GetHashKey("WEAPON_MACHINEPISTOL")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_MARKSMANPISTOL")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_MARKSMANRIFLE")] = "0x23FF2541",
-		[GetHashKey("WEAPON_MG")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_MICROSMG")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_MINIGUN")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_MINISMG")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_MOLOTOV")] = "0xF0521A69",
-		[GetHashKey("WEAPON_MUSKET")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_NIGHTSTICK")] = "DM_TK_MELEE1",
-		[GetHashKey("WEAPON_PASSENGER_ROCKET")] = "0xE5DE491C",
-		[GetHashKey("WEAPON_PETROLCAN")] = "0xE5DE491C",
-		[GetHashKey("WEAPON_PIPEBOMB")] = "0xE5DE491C",
-		[GetHashKey("WEAPON_PISTOL")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_PISTOL50")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_POOLCUE")] = "DM_TK_MELEE1",
-		[GetHashKey("WEAPON_PROXMINE")] = "0xE5DE491C",
-		[GetHashKey("WEAPON_PUMPSHOTGUN")] = "0xE51459D1",
-		[GetHashKey("WEAPON_RAILGUN")] = "0xE5DE491C",
-		[GetHashKey("WEAPON_RAMMED_BY_CAR")] = "DM_TK_VK1",
-		[GetHashKey("WEAPON_REMOTESNIPER")] = "0x28BBBF8E",
-		[GetHashKey("WEAPON_REVOLVER")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_RPG")] = "0xE5DE491C",
-		[GetHashKey("WEAPON_RUN_OVER_BY_CAR")] = "DM_TK_VK1",
-		[GetHashKey("WEAPON_SAWNOFFSHOTGUN")] = "0xE51459D1",
-		[GetHashKey("WEAPON_SMG")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_SMOKEGRENADE")] = "0x7ABAA601",
-		[GetHashKey("WEAPON_SNIPERRIFLE")] = "0x28BBBF8E",
-		[GetHashKey("WEAPON_SNSPISTOL")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_SPECIALCARBINE")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_STICKYBOMB")] = "0xE5DE491C",
-		[GetHashKey("WEAPON_STINGER")] = "0xB6862F2A",
-		[GetHashKey("WEAPON_STUNGUN")] = "DM_TK_MELEE1",
-		[GetHashKey("WEAPON_SWITCHBLADE")] = "0xB6862F2A",
-		[GetHashKey("WEAPON_VEHICLE_ROCKET")] = "0xE5DE491C",
-		[GetHashKey("WEAPON_VINTAGEPISTOL")] = "DM_TK_PISTOL1",
-		[GetHashKey("WEAPON_WRENCH")] = "DM_TK_MELEE1"
-	}
+local deathTypes = {
+	--table layout: [hash] = {"pl1 killed pl2", "pl1 killed you", "you killed pl2"}
+	[GetHashKey("VEHICLE_WEAPON_NOSE_TURRET_VALKYRIE")] = "DM_TK_PISTOL1",
+	[GetHashKey("VEHICLE_WEAPON_PLANE_ROCKET")] = "0xE5DE491C",
+	[GetHashKey("VEHICLE_WEAPON_PLAYER_BULLET")] = "DM_TK_PISTOL1",
+	[GetHashKey("VEHICLE_WEAPON_PLAYER_HUNTER")] = "DM_TK_PISTOL1",
+	[GetHashKey("VEHICLE_WEAPON_PLAYER_LASER")] = "0x7ABAA601",
+	[GetHashKey("VEHICLE_WEAPON_PLAYER_LAZER")] = "0x7ABAA601",
+	[GetHashKey("VEHICLE_WEAPON_PLAYER_SAVAGE")] = "0xB6862F2A",
+	[GetHashKey("VEHICLE_WEAPON_RUINER_BULLET")] = "DM_TK_PISTOL1",
+	[GetHashKey("VEHICLE_WEAPON_SPACE_ROCKET")] = "0xE5DE491C",
+	[GetHashKey("VEHICLE_WEAPON_TANK")] = "0xE5DE491C",
+	[GetHashKey("VEHICLE_WEAPON_TURRET_BOXVILLE")] = "DM_TICK1",
+	[GetHashKey("VEHICLE_WEAPON_TURRET_INSURGENT")] = "DM_TK_PISTOL1",
+	[GetHashKey("VEHICLE_WEAPON_TURRET_LIMO")] = "DM_TK_PISTOL1",
+	[GetHashKey("VEHICLE_WEAPON_TURRET_TECHNICAL")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_ADVANCEDRIFLE")] = "0x23FF2541",
+	[GetHashKey("WEAPON_AIR_DEFENCE_GUN")] = "0xE5DE491C",
+	[GetHashKey("WEAPON_AIRSTRIKE_ROCKET")] = "0xE5DE491C",
+	[GetHashKey("WEAPON_ANIMAL")] = "0xB6862F2A",
+	[GetHashKey("WEAPON_APPISTOL")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_ASSAULTRIFLE")] = "0x23FF2541",
+	[GetHashKey("WEAPON_ASSAULTSHOTGUN")] = "0xE51459D1",
+	[GetHashKey("WEAPON_ASSAULTSMG")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_AUTOSHOTGUN")] = "0xE51459D1",
+	[GetHashKey("WEAPON_BARBED_WIRE")] = "0xB6862F2A",
+	[GetHashKey("WEAPON_BAT")] = "DM_TK_MELEE1",
+	[GetHashKey("WEAPON_BATTLEAXE")] = "0xB6862F2A",
+	[GetHashKey("WEAPON_BOTTLE")] = "0xB6862F2A",
+	[GetHashKey("WEAPON_BULLPUPRIFLE")] = "0x23FF2541",
+	[GetHashKey("WEAPON_BULLPUPSHOTGUN")] = "0xE51459D1",
+	[GetHashKey("WEAPON_BZGAS")] = "DM_TK_GAS1",
+	[GetHashKey("WEAPON_CARBINERIFLE")] = "0x23FF2541",
+	[GetHashKey("WEAPON_COMBATMG")] = "0x7ABAA601",
+	[GetHashKey("WEAPON_COMBATPDW")] = "0x7ABAA601",
+	[GetHashKey("WEAPON_COMBATPISTOL")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_COMPACTLAUNCHER")] = "0xE5DE491C",
+	[GetHashKey("WEAPON_COMPACTRIFLE")] = "0x23FF2541",
+	[GetHashKey("WEAPON_COUGAR")] = "0xB6862F2A",
+	[GetHashKey("WEAPON_CROWBAR")] = "0xB6862F2A",
+	[GetHashKey("WEAPON_DAGGER")] = "0xB6862F2A",
+	[GetHashKey("WEAPON_DBSHOTGUN")] = "0xE51459D1",
+	[GetHashKey("WEAPON_DROWNING")] = "drowned",
+	[GetHashKey("WEAPON_DROWNING_IN_VEHICLE")] = "drowned",
+	[GetHashKey("WEAPON_EXPLOSION")] = "0xE5DE491C",
+	[GetHashKey("WEAPON_FALL")] = "DM_TICK1",
+	[GetHashKey("WEAPON_FIRE")] = "0xF0521A69",
+	[GetHashKey("WEAPON_FIREWORK")] = "0xE5DE491C",
+	[GetHashKey("WEAPON_FLARE")] = "0xF0521A69",
+	[GetHashKey("WEAPON_FLAREGUN")] = "0xF0521A69",
+	[GetHashKey("WEAPON_GOLFCLUB")] = "DM_TK_MELEE1",
+	[GetHashKey("WEAPON_GRENADE")] = "0xE5DE491C",
+	[GetHashKey("WEAPON_GRENADELAUNCHER")] = "0xE5DE491C",
+	[GetHashKey("WEAPON_GRENADELAUNCHER_SMOKE")] = "0xE5DE491C",
+	[GetHashKey("WEAPON_HAMMER")] = "DM_TK_MELEE1",
+	[GetHashKey("WEAPON_HATCHET")] = "0xB6862F2A",
+	[GetHashKey("WEAPON_HEAVYPISTOL")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_HEAVYSHOTGUN")] = "0xE51459D1",
+	[GetHashKey("WEAPON_HEAVYSNIPER")] = "0x28BBBF8E",
+	[GetHashKey("WEAPON_HELI_CRASH")] = "DM_TK_VK1",
+	[GetHashKey("WEAPON_HIT_BY_WATER_CANNON")] = "DM_TICK1",
+	[GetHashKey("WEAPON_HOMINGLAUNCHER")] = "0xE5DE491C",
+	[GetHashKey("WEAPON_KNIFE")] = "0xB6862F2A",
+	[GetHashKey("WEAPON_KNUCKLE")] = "DM_TK_MELEE1",
+	[GetHashKey("WEAPON_MACHETE")] = "0xB6862F2A",
+	[GetHashKey("WEAPON_MACHINEPISTOL")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_MARKSMANPISTOL")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_MARKSMANRIFLE")] = "0x23FF2541",
+	[GetHashKey("WEAPON_MG")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_MICROSMG")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_MINIGUN")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_MINISMG")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_MOLOTOV")] = "0xF0521A69",
+	[GetHashKey("WEAPON_MUSKET")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_NIGHTSTICK")] = "DM_TK_MELEE1",
+	[GetHashKey("WEAPON_PASSENGER_ROCKET")] = "0xE5DE491C",
+	[GetHashKey("WEAPON_PETROLCAN")] = "0xE5DE491C",
+	[GetHashKey("WEAPON_PIPEBOMB")] = "0xE5DE491C",
+	[GetHashKey("WEAPON_PISTOL")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_PISTOL50")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_POOLCUE")] = "DM_TK_MELEE1",
+	[GetHashKey("WEAPON_PROXMINE")] = "0xE5DE491C",
+	[GetHashKey("WEAPON_PUMPSHOTGUN")] = "0xE51459D1",
+	[GetHashKey("WEAPON_RAILGUN")] = "0xE5DE491C",
+	[GetHashKey("WEAPON_RAMMED_BY_CAR")] = "DM_TK_VK1",
+	[GetHashKey("WEAPON_REMOTESNIPER")] = "0x28BBBF8E",
+	[GetHashKey("WEAPON_REVOLVER")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_RPG")] = "0xE5DE491C",
+	[GetHashKey("WEAPON_RUN_OVER_BY_CAR")] = "DM_TK_VK1",
+	[GetHashKey("WEAPON_SAWNOFFSHOTGUN")] = "0xE51459D1",
+	[GetHashKey("WEAPON_SMG")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_SMOKEGRENADE")] = "0x7ABAA601",
+	[GetHashKey("WEAPON_SNIPERRIFLE")] = "0x28BBBF8E",
+	[GetHashKey("WEAPON_SNSPISTOL")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_SPECIALCARBINE")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_STICKYBOMB")] = "0xE5DE491C",
+	[GetHashKey("WEAPON_STINGER")] = "0xB6862F2A",
+	[GetHashKey("WEAPON_STUNGUN")] = "DM_TK_MELEE1",
+	[GetHashKey("WEAPON_SWITCHBLADE")] = "0xB6862F2A",
+	[GetHashKey("WEAPON_VEHICLE_ROCKET")] = "0xE5DE491C",
+	[GetHashKey("WEAPON_VINTAGEPISTOL")] = "DM_TK_PISTOL1",
+	[GetHashKey("WEAPON_WRENCH")] = "DM_TK_MELEE1"
+}
 
+Citizen.CreateThread(function()
 	while true do
 		local playerId = PlayerId()
 		local playerPed = PlayerPedId()
@@ -115,6 +116,7 @@ Citizen.CreateThread(function()
 		local deathReason = nil
 
 		SetAudioFlag("LoadMPData", true)
+		RequestScriptAudioBank("mp_wasted", 1)
 		local scaleformMovie = RequestScaleformMovie("MP_BIG_MESSAGE_FREEMODE")
 
 		if IsEntityDead(playerPed) then
@@ -139,7 +141,6 @@ Citizen.CreateThread(function()
 				TriggerServerEvent('huyax:deathscreen:playerDied', 2, 0)
 			end
 
-			PlaySoundFrontend(-1, "MP_Flash", "WastedSounds", true)
 			StartScreenEffect("DeathFailMPDark", 0, 0)
 			ShakeGameplayCam("DEATH_FAIL_IN_EFFECT_SHAKE", 1.0)
 
@@ -154,34 +155,36 @@ Citizen.CreateThread(function()
 			AddTextComponentSubstringTextLabel("RESPAWN_W")
 			EndTextCommandScaleformString()
 
-			PushScaleformMovieFunction(scaleformMovie, "SHOW_SHARD_WASTED_MP_MESSAGE")
-			BeginTextCommandScaleformString("STRING")
-			if killerId == playerId then
-				AddTextComponentSubstringTextLabel("DM_U_SUIC")
-			elseif killerId ~= playerId and killerName ~= "**Invalid**" then
+			if killerName ~= "**Invalid**" then
+				PushScaleformMovieFunction(scaleformMovie, "SHOW_SHARD_WASTED_MP_MESSAGE")
+				BeginTextCommandScaleformString("STRING")
+				if killerId == playerId then
+					AddTextComponentSubstringTextLabel("DM_U_SUIC")
+				elseif killerId ~= playerId and killerName ~= "**Invalid**" then
 
-				if deathTypes[causeHash] == nil or deathTypes[causeHash] == "NULL" then
-					if deathTypes[weaponHash] == nil or deathTypes[weaponHash] == "NULL" then
-						deathReason = GetLabelText("DM_TICK1"):gsub("~a~~HUD_COLOUR_WHITE~", "<C>" .. killerName .. "</C>")
+					if deathTypes[causeHash] == nil or deathTypes[causeHash] == "NULL" then
+						if deathTypes[weaponHash] == nil or deathTypes[weaponHash] == "NULL" then
+							deathReason = GetLabelText("DM_TICK1"):gsub("~a~~HUD_COLOUR_WHITE~", "<C>" .. killerName .. "</C>")
+						else
+							deathReason = GetLabelText(deathTypes[weaponHash]):gsub("~a~~HUD_COLOUR_WHITE~", "<C>" .. killerName .. "</C>")
+						end
 					else
-						deathReason = GetLabelText(deathTypes[weaponHash]):gsub("~a~~HUD_COLOUR_WHITE~", "<C>" .. killerName .. "</C>")
+						deathReason = GetLabelText(deathTypes[causeHash]):gsub("~a~~HUD_COLOUR_WHITE~", "<C>" .. killerName .. "</C>")
 					end
-				else
-					deathReason = GetLabelText(deathTypes[causeHash]):gsub("~a~~HUD_COLOUR_WHITE~", "<C>" .. killerName .. "</C>")
-				end
-					
-				AddTextComponentSubstringPlayerName(deathReason)
+						
+					AddTextComponentSubstringPlayerName(deathReason)
 
-			else
-				AddTextComponentSubstringTextLabel("DM_TK_YD1")
+				end
+				EndTextCommandScaleformString()
 			end
-			EndTextCommandScaleformString()
 
 			PopScaleformMovieFunctionVoid()
 			
-			Citizen.Wait(1000)
+			Citizen.Wait(750)
 
-			PlaySound(-1, "MP_Impact", "WastedSounds", 0, 0, 0)
+			PlaySoundFrontend(-1, "MP_Flash", "WastedSounds", true)
+
+			Citizen.Wait(250)
 
 			while IsEntityDead(PlayerPedId()) do
 				DrawScaleformMovieFullscreen(scaleformMovie, 255, 255, 255, 255)
@@ -193,6 +196,7 @@ Citizen.CreateThread(function()
 			end
 			StopScreenEffect("DeathFailMPDark")
 			StopGameplayCamShaking()
+			PlaySoundFrontend(-1, "MP_Impact", "WastedSounds", true)
 
 		end
 
@@ -202,8 +206,18 @@ end)
 
 RegisterNetEvent("huyax:deathscreen:showNotification")
 AddEventHandler("huyax:deathscreen:showNotification", function(id, target, killer)
-	if target ~= GetPlayerName(PlayerId()) then
-		local text = nil
+	local text = nil
+	if killer == GetPlayerName(PlayerId()) and id == 1 then
+		text = GetLabelText("DM_TICK2"):gsub("~a~~HUD_COLOUR_WHITE~", "<C>" .. killer .. "</C>"):gsub("~a~", "<C>" .. target .. "</C>")
+	elseif target == GetPlayerName(PlayerId()) then
+		if id == 0 then
+			text = GetLabelText("DM_U_SUIC")
+		elseif id == 1 then
+			text = GetLabelText("DM_TICK1"):gsub("~a~~HUD_COLOUR_WHITE~", "<C>" .. killer .. "</C>")
+		else
+			text = GetLabelText("DM_TK_YD1")
+		end
+	elseif target ~= GetPlayerName(PlayerId()) then
 		if id == 0 then
 			text = GetLabelText("DM_O_SUIC"):gsub("~a~~HUD_COLOUR_WHITE~", "<C>" .. target .. "</C>")
 		elseif id == 1 then
@@ -211,8 +225,8 @@ AddEventHandler("huyax:deathscreen:showNotification", function(id, target, kille
 		else
 			text = GetLabelText("TICK_DIED"):gsub("~a~~HUD_COLOUR_WHITE~", "<C>" .. target .. "</C>")
 		end
-		SetNotificationTextEntry("STRING")
-		AddTextComponentSubstringPlayerName(text)
-		DrawNotification(true, true)
 	end
+	SetNotificationTextEntry("STRING")
+	AddTextComponentSubstringPlayerName(text)
+	DrawNotification(true, false)
 end)
