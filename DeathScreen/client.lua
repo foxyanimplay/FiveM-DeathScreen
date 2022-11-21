@@ -104,6 +104,13 @@ local deathTypes = {
 
 Citizen.CreateThread(function()
 	while true do
+		--SetPlayerModel(PlayerId(), 'player_one')
+        N_0xb9449845f73f5e9c("SET_HEADER_TITLE")
+        PushScaleformMovieFunctionParameterString("Grand Theft Auto Online")
+        PushScaleformMovieFunctionParameterBool(true)
+        PushScaleformMovieFunctionParameterString("")
+        PushScaleformMovieFunctionParameterBool(true)
+        PopScaleformMovieFunctionVoid()
 		local playerId = PlayerId()
 		local playerPed = PlayerPedId()
 		local playerName = GetPlayerName(playerId)
@@ -114,6 +121,7 @@ Citizen.CreateThread(function()
 		local causeHash = nil
 		local weaponHash = nil
 		local deathReason = nil
+		local playingScaleform = false
 
 		SetAudioFlag("LoadMPData", true)
 		RequestScriptAudioBank("mp_wasted", 1)
@@ -141,7 +149,7 @@ Citizen.CreateThread(function()
 				TriggerServerEvent('huyax:deathscreen:playerDied', 2, 0)
 			end
 
-			StartScreenEffect("DeathFailMPDark", 0, 0)
+			StartScreenEffect("DeathFailMPIn", 0, 0)
 			ShakeGameplayCam("DEATH_FAIL_IN_EFFECT_SHAKE", 1.0)
 
 			while not HasScaleformMovieLoaded(scaleformMovie) do
@@ -150,9 +158,10 @@ Citizen.CreateThread(function()
 			if killerId and killerId ~= playerId and killerName ~= "**Invalid**" then
 				CreateCinematicShot(-1096069633, 2000, 0, killerPed)
 			end
+			wasted = GetLabelText("RESPAWN_W")
 			PushScaleformMovieFunction(scaleformMovie, "SHOW_SHARD_WASTED_MP_MESSAGE")
-			BeginTextCommandScaleformString("STRING")
-			AddTextComponentSubstringTextLabel("RESPAWN_W")
+				BeginTextComponent("STRING")
+				AddTextComponentString("~w~" .. wasted:gsub('~r~', ''))
 			EndTextCommandScaleformString()
 
 			if killerName ~= "**Invalid**" then
@@ -176,8 +185,13 @@ Citizen.CreateThread(function()
 
 				end
 				EndTextCommandScaleformString()
+			else
+				PushScaleformMovieFunction(scaleformMovie, "SHOW_SHARD_WASTED_MP_MESSAGE")
+				BeginTextCommandScaleformString("STRING")
+				AddTextComponentSubstringTextLabel("")
+				EndTextCommandScaleformString()
 			end
-
+			ScaleformMovieMethodAddParamInt(27)
 			PopScaleformMovieFunctionVoid()
 			
 			Citizen.Wait(750)
@@ -185,6 +199,7 @@ Citizen.CreateThread(function()
 			PlaySoundFrontend(-1, "MP_Flash", "WastedSounds", true)
 
 			Citizen.Wait(250)
+
 
 			while IsEntityDead(PlayerPedId()) do
 				DrawScaleformMovieFullscreen(scaleformMovie, 255, 255, 255, 255)
@@ -194,9 +209,9 @@ Citizen.CreateThread(function()
 			if IsCinematicShotActive(-1096069633) then
 				StopCinematicShot(-1096069633)
 			end
-			StopScreenEffect("DeathFailMPDark")
+			StopScreenEffect("DeathFailMPIn")
 			StopGameplayCamShaking()
-			PlaySoundFrontend(-1, "MP_Impact", "WastedSounds", true)
+			--PlaySoundFrontend(-1, "MP_Impact", "WastedSounds", true)
 
 		end
 
